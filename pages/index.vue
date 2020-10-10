@@ -5,6 +5,7 @@
       <h1 class="title">
         {{ title }}
       </h1>
+      <h2>Message from API: {{ msg }}</h2>
     </div>
   </div>
 </template>
@@ -15,6 +16,12 @@ import { Vue, Component } from 'nuxt-property-decorator'
 @Component
 export default class Foods extends Vue {
   title = "express-nuxt-minimal-ts"
+  async asyncData ({ $axios }: any) {
+    const msg = await $axios.$get('/api/hello')
+    return {
+      msg
+    }
+  }
 }
 </script>
 
