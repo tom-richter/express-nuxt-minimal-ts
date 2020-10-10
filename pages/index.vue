@@ -3,34 +3,19 @@
     <div>
       <Logo />
       <h1 class="title">
-        express-nuxt-minimal-ts
+        {{ title }}
       </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'nuxt-property-decorator'
 
-export default Vue.extend({})
+@Component
+export default class Foods extends Vue {
+  title = "express-nuxt-minimal-ts"
+}
 </script>
 
 <style>
