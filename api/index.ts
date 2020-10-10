@@ -1,10 +1,10 @@
-const express = require('express')
+import express from 'express';
 
 // Create express instance
 const app = express()
 
 // API Routes
-app.use('/hello', (req, res) => {
+app.use('/hello', (_req, res) => {
   res.end('Hello Nuxt-Express!')
 })
 
