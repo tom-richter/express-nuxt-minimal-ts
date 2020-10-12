@@ -38,6 +38,10 @@ export default {
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},
 
+  env: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000'
+  },
+
   serverMiddleware: {
     '/api': '~/api'
   },

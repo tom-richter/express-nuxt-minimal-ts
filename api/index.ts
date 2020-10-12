@@ -3,9 +3,21 @@ import express from 'express';
 // Create express instance
 const app = express()
 
-// API Routes
-app.use('/hello', (_req, res) => {
-  res.end('Hello Nuxt-Express!')
+app.use('/posts', (_req, res) => {
+  res.send([
+    {
+      id: '1',
+      title: 'My Post 1',
+    },
+    {
+      id: '2',
+      title: 'My Post 2',
+    },
+    {
+      id: '3',
+      title: 'My Post 3',
+    },
+  ])
 })
 
 // Export express app

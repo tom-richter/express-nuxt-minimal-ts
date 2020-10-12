@@ -1,26 +1,37 @@
 <template>
   <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        {{ title }}
-      </h1>
-      <h2>Message from API: {{ msg }}</h2>
+    <div v-if="$fetchState.pending">Loading...</div>
+    <div v-else-if="$fetchState.error">
+      <p>Error while fetching foods: {{ $fetchState.error.message }}</p>
+    </div>
+    <div v-else>
+      <h1 class="title">My Minimal Blog</h1>
+      {{ posts }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import PostService from './../services/PostService'
+
+interface Post {
+  id: string
+  title: string
+}
 
 @Component
-export default class Foods extends Vue {
-  title = "express-nuxt-minimal-ts"
-  async asyncData ({ $axios }: any) {
-    const msg = await $axios.$get('/api/hello')
-    return {
-      msg
-    }
+export default class Posts extends Vue {
+  posts: Post[] = []
+
+  fetch() {
+    return Promise.all([
+      PostService.getPosts()
+        .then((posts) => {
+          this.posts = posts
+        })
+        .catch((error) => console.log(error))
+    ])
   }
 }
 </script>
@@ -48,20 +59,8 @@ export default class Foods extends Vue {
     sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 50px;
   color: #35495e;
   letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 </style>
