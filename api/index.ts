@@ -1,6 +1,5 @@
 import express from 'express';
 
-// Create express instance
 const app = express()
 
 app.use('/posts', (_req, res) => {
@@ -20,10 +19,8 @@ app.use('/posts', (_req, res) => {
   ])
 })
 
-// Export express app
 module.exports = app
 
-// Start standalone server if directly running
 if (require.main === module) {
   const port = process.env.PORT || 3001
   app.listen(port, () => {

@@ -1,37 +1,28 @@
 <template>
   <div class="container">
-    <div v-if="$fetchState.pending">Loading...</div>
-    <div v-else-if="$fetchState.error">
-      <p>Error while fetching foods: {{ $fetchState.error.message }}</p>
-    </div>
-    <div v-else>
+    <div>
       <h1 class="title">My Minimal Blog</h1>
-      {{ posts }}
+      <button @click="getPosts">Get Posts</button>
+      <p>{{ posts }}</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
-import PostService from './../services/PostService'
+import { Vue, Component } from "nuxt-property-decorator";
 
 interface Post {
-  id: string
-  title: string
+  id: string;
+  title: string;
 }
 
 @Component
 export default class Posts extends Vue {
-  posts: Post[] = []
+  posts: Post[] = [];
 
-  fetch() {
-    return Promise.all([
-      PostService.getPosts()
-        .then((posts) => {
-          this.posts = posts
-        })
-        .catch((error) => console.log(error))
-    ])
+  async getPosts() {
+    const { data } = await this.$axios.get("/posts");
+    this.posts = data;
   }
 }
 </script>
@@ -47,16 +38,8 @@ export default class Posts extends Vue {
 }
 
 .title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 50px;
